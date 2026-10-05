@@ -1,0 +1,7 @@
+module bin9_to_bcd3(input wire [8:0] bin ,output wire [3:0] hund ,output wire [3:0] tens ,output wire [3:0] ones );
+	wire [8:0] r100 ;
+	assign hund = bin / 9'd100 ;
+	assign r100 = bin - hund * 9'd100 ;
+	assign tens = r100 / 9'd10 ;
+	assign ones = r100 - tens * 9'd10 ;
+endmodule
