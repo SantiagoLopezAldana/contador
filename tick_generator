@@ -1,0 +1,20 @@
+module tick_generator (input wire clk, input wire rst, input wire e, input wire speed_sel, output reg tick);
+	reg [25:0] counter;
+	wire [25:0] terminal_count = speed_sel ? 26'd4_999_999: 26'd49_999_999;
+	
+	always @ (posedge clk or posedge rst) begin
+		if(rst)begin
+			counter <= 26'd0;
+			tick <= 1'b0;
+		end else if (!e) begin
+			counter <= 26'd0;
+			tick <= 1'b0;
+		end else if (counter >= terminal_count) begin
+			counter <= 26'd0;
+			tick <= 1'b1;
+		end else begin
+			counter <= counter + 26'd1;
+			tick <= 1'b0;
+		end
+	end
+endmodule
