@@ -19,7 +19,7 @@ module contador_9bits_top (input wire clk, input wire rst, input wire speed_sel,
 	
 	
 	tick_generator TICK (.clk(clk), .rst(rst), .e(e), .speed_sel(speed_sel), .tick(tick_clk));
-	contador CONT (.clk(tick_clk), .rst(rst), .pause_state(pause_state), .descendant_state(descendant_pulse), .ascendant_state(ascendant_pulse), .cuenta(count));
+	contador CONT (.clk(clk), .tick(tick_clk), .rst(rst), .pause_state(pause_state), .descendant_state(descendant_pulse), .ascendant_state(ascendant_pulse), .cuenta(count));
 	
 	bin9_to_bcd3 BINTOBCD (.bin(magnitud), .hund(centena), .tens(decena), .ones(unidad));
 	
