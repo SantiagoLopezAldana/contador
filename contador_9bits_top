@@ -3,8 +3,7 @@ module contador_9bits_top (input wire clk, input wire rst, input wire speed_sel,
 	output [6:0] HEX3, output [6:0] HEX2, output [6:0] HEX1, output [6:0] HEX0);
 	wire e = 1'b1;
 	wire signed [8:0] count;
-	wire [8:0] magnitud_complemento = {1'b0, count[7:0]};
-	wire [8:0] magnitud = count[8] ? (~magnitud_complemento + 1'b1) : magnitud_complemento;
+	wire [8:0] magnitud = count[8] ? (~count + 9'b000000001) : count;
 	
 	wire tick_clk;
 	
@@ -22,7 +21,7 @@ module contador_9bits_top (input wire clk, input wire rst, input wire speed_sel,
 	tick_generator TICK (.clk(clk), .rst(rst), .e(e), .speed_sel(speed_sel), .tick(tick_clk));
 	contador CONT (.clk(tick_clk), .rst(rst), .pause_state(pause_state), .descendant_state(descendant_pulse), .ascendant_state(ascendant_pulse), .cuenta(count));
 	
-	bin9_to_bcd3 BINTOBCD (.bin(magnitud[7:0]), .hund(centena), .tens(decena), .ones(unidad));
+	bin9_to_bcd3 BINTOBCD (.bin(magnitud), .hund(centena), .tens(decena), .ones(unidad));
 	
 	Decoder HEX_0 (.b(unidad), .seg(HEX0));
 	Decoder HEX_1 (.b(decena), .seg(HEX1));
