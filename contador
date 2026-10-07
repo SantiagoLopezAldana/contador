@@ -2,7 +2,7 @@ module contador(input wire clk, input wire rst, input wire  pause_state, input w
 	localparam PAUSA = 3'b100; 
 	localparam DESCENSO = 3'b010;
 	localparam ASCENSO = 3'b001;
-	//agregar debounce
+
 	always @(posedge clk or posedge rst) begin
 		if(rst)
 			cuenta <= 9'b000000000;
