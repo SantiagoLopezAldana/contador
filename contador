@@ -1,7 +1,7 @@
 module contador(input wire clk, input wire tick, input wire rst, input wire pause_state, input wire  descendant_state, input wire  ascendant_state, output reg signed [8:0] cuenta);
-	localparam PAUSA = 2'b100; 
-	localparam DESCENSO = 2'b001;
-	localparam ASCENSO = 2'b001;
+	localparam PAUSA = 2'b00; 
+	localparam DESCENSO = 2'b01;
+	localparam ASCENSO = 2'b10;
 
 	reg [1:0] state;
 	reg [1:0] next_state;
@@ -13,12 +13,44 @@ module contador(input wire clk, input wire tick, input wire rst, input wire paus
 			state <= next_state;
 	end
 
+	always @(*) begin
+		case(state)
+			PAUSA: begin
+				if (descendant_state)
+					next_state = DESCENSO;
+				else if (ascendant_state)
+					next_state = ASCENSO;
+				else
+					next_state = PAUSA;
+			end
+			DESCENSO: begin
+				if (pause_state)
+					next_state = PAUSA;
+				else if (ascendant_state)
+					next_state = ASCENSO;
+				else
+					next_state = DESCENSO;
+			end
+			ASCENSO: begin
+				if(pause_state)
+					next_state = PAUSA; 
+				else if (descendant_state)
+					next_state = DESCENSO;
+				else
+					next_state = ASCENSO;
+			end
+			default: next_state = PAUSA;
+		endcase
+	end
+	
+	
 	always @(posedge clk or posedge rst) begin
 		if(rst) begin
-			cuenta <= 9'b000000000;
+			cuenta = 9'b000000000;
 		end
+		
 		else if (tick) begin
-			case({pause_state, descendant_state, ascendant_state})
+			case(state)
 				PAUSA: cuenta <= cuenta + 1'b0;
 				DESCENSO: cuenta <= cuenta - 1'b1;
 				ASCENSO: cuenta <= cuenta + 1'b1;
@@ -27,4 +59,3 @@ module contador(input wire clk, input wire tick, input wire rst, input wire paus
 		end
 	end
 endmodule
-	
