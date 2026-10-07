@@ -46,15 +46,15 @@ module contador(input wire clk, input wire tick, input wire rst, input wire paus
 	
 	always @(posedge clk or posedge rst) begin
 		if(rst) begin
-			cuenta = 9'b000000000;
+			cuenta <= 9'b000000000;
 		end
 		
 		else if (tick) begin
 			case(state)
-				PAUSA: cuenta <= cuenta + 1'b0;
-				DESCENSO: cuenta <= cuenta - 1'b1;
-				ASCENSO: cuenta <= cuenta + 1'b1;
-				default: cuenta <= cuenta + 1'b0;
+				PAUSA: cuenta <= cuenta + 9'b000000000;
+				DESCENSO: cuenta <= cuenta - 9'b000000001;
+				ASCENSO: cuenta <= cuenta + 9'b000000001;
+				default: cuenta <= cuenta + 9'b000000000;
 			endcase
 		end
 	end
