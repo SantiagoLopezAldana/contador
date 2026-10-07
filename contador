@@ -1,7 +1,7 @@
 module contador(input wire clk, input wire tick, input wire rst, input wire pause_state, input wire  descendant_state, input wire  ascendant_state, output reg signed [8:0] cuenta);
-	localparam PAUSA = 2'b00; 
-	localparam DESCENSO = 2'b01;
-	localparam ASCENSO = 2'b10;
+	localparam PAUSA = 2'b100; 
+	localparam DESCENSO = 2'b001;
+	localparam ASCENSO = 2'b001;
 
 	reg [1:0] state;
 	reg [1:0] next_state;
