@@ -8,10 +8,10 @@ module contador(input wire clk, input wire tick, input wire rst, input wire paus
 			cuenta <= 9'b000000000;
 		else if (tick) begin
 			case({pause_state, descendant_state, ascendant_state})
-				PAUSA: cuenta = cuenta + 1'b0;
-				DESCENSO: cuenta = cuenta - 1'b1;
-				ASCENSO: cuenta = cuenta + 1'b1;
-				default: cuenta = cuenta + 1'b0;
+				PAUSA: cuenta <= cuenta + 1'b0;
+				DESCENSO: cuenta <= cuenta - 1'b1;
+				ASCENSO: cuenta <= cuenta + 1'b1;
+				default: cuenta <= cuenta + 1'b0;
 			endcase
 		end
 	end
