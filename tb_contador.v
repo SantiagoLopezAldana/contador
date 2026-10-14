@@ -36,13 +36,12 @@ module tb_contador;
 		#10 ascendant_state = 1; 
 		#10 ascendant_state = 0; 
 		
-		// Se mantiene el tick activo durante 5 ciclos de reloj para que la cuenta suba a 5
+		
 		tick = 1; 
 		#50; 
 		tick = 0;
 		
 		// 3. Prueba de Pausa
-		// Se envía un pulso para cambiar el estado de la FSM a PAUSA
 		#10 pause_state = 1;
 		#10 pause_state = 0;
 		
@@ -52,7 +51,6 @@ module tb_contador;
 		tick = 0;
 
 		// 4. Prueba de Decremento y se cruza por cero
-		// Se envía un pulso para cambiar el estado de la FSM a DESCENSO
 		#10 descendant_state = 1;
 		#10 descendant_state = 0;
 		
